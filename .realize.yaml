@@ -1,0 +1,24 @@
+settings:
+  legacy:
+    force: false
+schema:
+  - name: app
+    commands:
+      install:
+        status: true
+        method: go build -o app /go/src/app/cmd/api
+      run:
+        status: true
+        method: ./app
+    watcher:
+      extensions:
+        - go
+      paths:
+        - /
+      ignore:
+        paths:
+          - .git
+          - .realize
+          - .data
+          - vendor
+          - sql

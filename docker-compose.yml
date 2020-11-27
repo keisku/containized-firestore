@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  app:
+    container_name: app
+    build:
+      context: ./dockerfiles
+      dockerfile: Dockerfile-dev
+    ports:
+      - 5000:5000
+    volumes:
+      - .:/go/src/app:delegated
+    environment:
+      PORT: 4200
+      FIRESTORE_EMULATOR_HOST: firestore:8812
+      PROJECT_ID: project-id
+    networks:
+      - default
+    depends_on:
+      - firestore
+
+  firestore:
+    container_name: firestore
+    build:
+      context: ./dockerfiles
+      dockerfile: Dockerfile-firestore
+    environment:
+      PROJECT_ID: project_id
+    command: /bin/bash /start-firestore.sh
+    volumes:
+      - ./firestore:/firestore
