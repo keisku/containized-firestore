@@ -1,17 +1,39 @@
 package api
 
 import (
+	"context"
 	"net/http"
 
+	"cloud.google.com/go/firestore"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	appUser "github.com/kskumgk63/containized-firestore/internal/application/user"
+	firestoreUser "github.com/kskumgk63/containized-firestore/internal/infrastructure/firestore/user"
+	"github.com/kskumgk63/containized-firestore/pkg/env"
 )
 
-type server struct{}
+type server struct {
+	account CRUDHandler
+}
 
 // New .
 func New() http.Handler {
-	s := server{}
+	ctx := context.Background()
+	projectID, err := env.ProjectID()
+	if err != nil {
+		panic(err)
+	}
+	client, err := firestore.NewClient(ctx, projectID)
+	if err != nil {
+		panic(err)
+	}
+	s := server{
+		newAccountCRUDHandler(
+			appUser.NewUseCase(
+				firestoreUser.NewRepository(client),
+			),
+		),
+	}
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
@@ -20,26 +42,11 @@ func New() http.Handler {
 		w.Write([]byte("status ok"))
 	})
 	r.Route("/account", func(r chi.Router) {
-		r.Post("/", s.CreateAccount)
-		r.Get("/", s.LoadUsers)
-		r.Get("/{id}", s.GetAccount)
-		r.Post("/{id}", s.UpdateAccount)
-		r.Delete("/{id}", s.DeleteAccount)
+		r.Post("/", s.account.Create)
+		r.Get("/", s.account.Read)
+		r.Get("/{id}", s.account.Read)
+		r.Post("/{id}", s.account.Update)
+		r.Delete("/{id}", s.account.Delete)
 	})
 	return r
 }
-
-// CreateAccount .
-func (s server) CreateAccount(w http.ResponseWriter, r *http.Request) {}
-
-// LoadUsers .
-func (s server) LoadUsers(w http.ResponseWriter, r *http.Request) {}
-
-// GetAccount .
-func (s server) GetAccount(w http.ResponseWriter, r *http.Request) {}
-
-// UpdateAccount .
-func (s server) UpdateAccount(w http.ResponseWriter, r *http.Request) {}
-
-// DeleteAccount .
-func (s server) DeleteAccount(w http.ResponseWriter, r *http.Request) {}

@@ -14,9 +14,7 @@ type CreateInput struct {
 
 // CreateOutput .
 type CreateOutput struct {
-	UserID    string
-	AccountID string
-	Mail      string
+	UserID string
 }
 
 func (u usecase) Create(ctx context.Context, in *CreateInput) (*CreateOutput, error) {
@@ -34,8 +32,6 @@ func (u usecase) Create(ctx context.Context, in *CreateInput) (*CreateOutput, er
 		return nil, err
 	}
 	return &CreateOutput{
-		UserID:    id.String(),
-		AccountID: accountID.String(),
-		Mail:      mail.String(),
+		UserID: id.String(),
 	}, nil
 }

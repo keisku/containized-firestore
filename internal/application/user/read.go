@@ -45,7 +45,7 @@ type LoadOutput struct {
 
 // LoadedUser .
 type LoadedUser struct {
-	UserID    string
+	ID        string
 	AccountID string
 	Mail      string
 }
@@ -58,7 +58,7 @@ func (u usecase) Load(ctx context.Context, in *LoadInput) (*LoadOutput, error) {
 	users := make([]LoadedUser, len(loadedUsers))
 	for i, loadedUser := range loadedUsers {
 		users[i] = LoadedUser{
-			UserID:    loadedUser.ID().String(),
+			ID:        loadedUser.ID().String(),
 			AccountID: loadedUser.Account().ID().String(),
 			Mail:      loadedUser.Account().Mail().String(),
 		}

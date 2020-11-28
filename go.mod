@@ -6,5 +6,6 @@ require (
 	cloud.google.com/go/firestore v1.3.0
 	github.com/go-chi/chi v1.5.0
 	github.com/gofrs/uuid v3.3.0+incompatible
+	github.com/stretchr/testify v1.4.0
 	google.golang.org/grpc v1.33.2
 )
