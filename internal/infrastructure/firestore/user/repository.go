@@ -19,7 +19,7 @@ func NewRepository(firestoreClient *firestore.Client) user.Repository {
 }
 
 func (r repository) accountCollection() *firestore.CollectionRef {
-	return r.Collection("account")
+	return r.Collection("accounts")
 }
 
 func (r repository) accountDocument(id user.ID) *firestore.DocumentRef {

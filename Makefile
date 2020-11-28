@@ -15,3 +15,6 @@ restart:
 
 test:
 	docker-compose exec example go test -cover -v `go list ./... | grep -v mock | grep -v proto`
+
+dump:
+	docker-compose exec example go run scripts/dump/main.go
