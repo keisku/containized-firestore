@@ -29,7 +29,7 @@ func Test_parseBody(t *testing.T) {
 				),
 			},
 			want:    nil,
-			wantErr: "",
+			wantErr: "http method is not POST",
 		},
 		{
 			name: "DELETE",
@@ -41,7 +41,7 @@ func Test_parseBody(t *testing.T) {
 				),
 			},
 			want:    nil,
-			wantErr: "",
+			wantErr: "http method is not POST",
 		},
 		{
 			name: "POST no body",
