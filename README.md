@@ -16,6 +16,20 @@ $ make logs
 $ make down
 ```
 
+
+## How to dump
+
+```
+$ make dump
+
+-----------------------------------
+    accounts
+-----------------------------------
+[0] 3c346b57-21bf-4514-b5df-857ef23ca030: map[account_id:test001 mail:test001@mail.com]
+[1] 42e677c7-9d46-4ef4-a9a4-040c38c27d36: map[account_id:test002 mail:test002@mail.com]
+[2] fdc3edf5-bb49-4de1-abc6-1b36dd34a3e5: map[account_id:test003 mail:test003@mail.com]
+```
+
 ## API Endpoints
 
 ### `GET /account`
