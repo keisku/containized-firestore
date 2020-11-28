@@ -27,20 +27,25 @@ type account struct {
 	Mail   string `json:"mail"`
 }
 
-func (h accountCRUDHandler) extractAccount(r *http.Request) (*account, error) {
+// Empty .
+func (a account) Empty() bool {
+	return a.UserID == "" && a.ID == "" && a.Mail == ""
+}
+
+func (h accountCRUDHandler) extractAccount(r *http.Request) (account, error) {
 	body, err := parseBody(r)
 	if err != nil {
-		return nil, err
+		return account{}, err
 	}
-	var account *account
+	var account account
 	if id, ok := body["account_id"].(string); ok {
 		account.ID = id
 	}
 	if mail, ok := body["mail"].(string); ok {
 		account.Mail = mail
 	}
-	if account == nil {
-		return nil, errors.New("account attributes must be set")
+	if account.Empty() {
+		return account, errors.New("account attributes must be set")
 	}
 	return account, nil
 }

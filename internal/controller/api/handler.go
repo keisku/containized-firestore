@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -17,7 +18,7 @@ type CRUDHandler interface {
 
 func parseBody(r *http.Request) (map[string]interface{}, error) {
 	if r.Method != http.MethodPost {
-		return nil, nil
+		return nil, errors.New("http method is not POST")
 	}
 	var body map[string]interface{}
 	raw, err := ioutil.ReadAll(r.Body)
