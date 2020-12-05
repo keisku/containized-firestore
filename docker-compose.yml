@@ -4,7 +4,7 @@ services:
     container_name: api
     build:
       context: ./
-      dockerfile: Dockerfile-dev
+      dockerfile: ./docker/api/dev/Dockerfile
     ports:
       - 5000:5000
     volumes:
@@ -22,7 +22,7 @@ services:
     container_name: firestore
     build:
       context: ./
-      dockerfile: Dockerfile-firestore
+      dockerfile: ./docker/firestore/Dockerfile
     environment:
       PROJECT_ID: project_id
     volumes:
